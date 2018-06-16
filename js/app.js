@@ -39,6 +39,7 @@ function shuffle(array) {
 
 var revealedCards = [];
 var clicks = 0;
+var disabledCards = false;
 
 function revealCard(card) {
     card.addClass("open show");
@@ -78,12 +79,27 @@ function testMatch() {
     if (lastCard.find("i").attr("class") === penultimateCard.find("i").attr("class")){
         confirmMatch();
     } else {
-        window.setTimeout(concealCards, 2000);
+        disableFlippingCards();
+        window.setTimeout(function () {
+            concealCards();
+            enableFlippingCards();
+        }, 500);
     }
+}
+
+function enableFlippingCards() {
+    disabledCards = false;
+}
+
+function disableFlippingCards() {
+    disabledCards = true;
 }
 
 $(function () {
     $("li.card").on("click", function () {
+        if (disabledCards){
+            return;
+        }
         revealCard($(this));
     });
     $(".restart").on("click", function() {
