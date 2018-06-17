@@ -25,7 +25,6 @@ function shuffle(array) {
     return array;
 }
 
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -64,6 +63,8 @@ function startGame() {
     while (revealedCards.length > 0) {
         concealCards();
     }
+    // shuffle();
+    // console.log('should shuffle');
 }
 
 function confirmMatch() {
@@ -106,3 +107,13 @@ $(function () {
         startGame();
     });
 });
+
+//timer
+const timer = {
+    millis: 0,
+    seconds: 0,
+    minutes: 0,
+    calculateTime: () => {
+
+    }
+};
