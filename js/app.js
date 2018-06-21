@@ -110,7 +110,7 @@ $(function () {
 
 //timer
 const timer = {
-    millis: 0,
+    tenthOfASecond: 0,
     seconds: 0,
     minutes: 0,
     calculateTime: () => {
