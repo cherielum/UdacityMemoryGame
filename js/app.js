@@ -61,7 +61,6 @@ function startGame() {
     while (revealedCards.length > 0) {
         concealCards();
     }
-    console.log("startTime now");
     startTimer();
 }
 
@@ -81,6 +80,10 @@ function startTimer() {
 
 function stopTimer() {
     clearInterval(timerId);
+}
+
+function winGame() {
+    stopTimer();
 }
 
 function updateMoves() {
@@ -108,7 +111,8 @@ function updateStars() {
 }
 
 function confirmMatch() {
-    revealedCards.splice(-2, 2).forEach(function (card) {
+    var lastCards = revealedCards.slice(-2);
+    lastCards.forEach(function (card) {
         card.removeClass("open show");
         card.addClass("match");
     });
@@ -119,6 +123,9 @@ function testMatch() {
     var penultimateCard = revealedCards[revealedCards.length - 2];
     if (lastCard.find("i").attr("class") === penultimateCard.find("i").attr("class")){
         confirmMatch();
+        if (revealedCards.length === 16) {
+            winGame();
+        }
     } else {
         disableFlippingCards();
         window.setTimeout(function () {
