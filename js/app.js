@@ -1,9 +1,6 @@
 /*
  * Create a list that holds all of your cards
- */
-
-
-/*
+ *
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
@@ -37,7 +34,7 @@ function shuffle(array) {
  */
 
 var revealedCards = [];
-var clicks = 0;
+var moves = 0;
 var disabledCards = false;
 
 function revealCard(card) {
@@ -45,8 +42,8 @@ function revealCard(card) {
     revealedCards.push(card);
     if (revealedCards.length % 2 == 0) {
         testMatch();
-        clicks++;
-        $( ".moves" ).text(clicks);
+        moves++;
+        updateMoves();
     }
 }
 
@@ -58,13 +55,51 @@ function concealCards() {
 
 function startGame() {
     $(".card").removeClass("match");
-    clicks = 0;
-    $( ".moves" ).text(clicks);
+    moves = 0;
+    updateMoves();
     while (revealedCards.length > 0) {
         concealCards();
     }
-    // shuffle();
-    // console.log('should shuffle');
+    console.log("startTime now");
+    startTimer();
+}
+
+function startTimer() {
+    var startTime = new Date();
+    setInterval(function () {
+        var currentTime = new Date();
+        var elapsedTime = currentTime - startTime;
+        var minutes = Math.floor(elapsedTime / 60000);
+        var seconds = Math.floor((elapsedTime % 60000) / 1000);
+        var miliseconds = elapsedTime % 1000;
+        var formattedTimer = minutes + ":" + seconds + ":" + miliseconds;
+        console.log(formattedTimer);
+        $(".timer-output").text(formattedTimer);
+    });
+}
+
+function updateMoves() {
+    $( ".moves" ).text(moves);
+    updateStars();
+}
+
+function updateStars() {
+    var stars;
+    if (moves <= 8) {
+        stars = 3;
+    } else if (moves <= 15) {
+        stars = 2;
+    } else {
+        stars = 1;
+    }
+    $(".stars").html("");
+    for (var i = 0; i < 3; i++) {
+        if (i+1 > stars) {
+            $(".stars").append('<li><i class="fa fa-star-o"></i></li>');
+        } else {
+            $(".stars").append('<li><i class="fa fa-star"></i></li>');
+        }
+    }
 }
 
 function confirmMatch() {
@@ -106,14 +141,6 @@ $(function () {
     $(".restart").on("click", function() {
         startGame();
     });
+    startGame();
 });
 
-//timer
-const timer = {
-    tenthOfASecond: 0,
-    seconds: 0,
-    minutes: 0,
-    calculateTime: () => {
-
-    }
-};
