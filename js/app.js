@@ -36,6 +36,7 @@ function shuffle(array) {
 var revealedCards = [];
 var moves = 0;
 var disabledCards = false;
+var timerId;
 
 function revealCard(card) {
     card.addClass("open show");
@@ -65,17 +66,21 @@ function startGame() {
 }
 
 function startTimer() {
+    stopTimer();
     var startTime = new Date();
-    setInterval(function () {
+    timerId = setInterval(function () {
         var currentTime = new Date();
         var elapsedTime = currentTime - startTime;
         var minutes = Math.floor(elapsedTime / 60000);
         var seconds = Math.floor((elapsedTime % 60000) / 1000);
         var miliseconds = elapsedTime % 1000;
         var formattedTimer = minutes + ":" + seconds + ":" + miliseconds;
-        console.log(formattedTimer);
         $(".timer-output").text(formattedTimer);
     });
+}
+
+function stopTimer() {
+    clearInterval(timerId);
 }
 
 function updateMoves() {
