@@ -54,14 +54,15 @@ function concealCards() {
     });
 }
 
-function startGame() {
+function resetGame() {
+    stopTimer();
     $(".card").removeClass("match");
     moves = 0;
     updateMoves();
     while (revealedCards.length > 0) {
         concealCards();
     }
-    startTimer();
+    updateTimer(0);
 }
 
 function startTimer() {
@@ -70,16 +71,21 @@ function startTimer() {
     timerId = setInterval(function () {
         var currentTime = new Date();
         var elapsedTime = currentTime - startTime;
-        var minutes = Math.floor(elapsedTime / 60000);
-        var seconds = Math.floor((elapsedTime % 60000) / 1000);
-        var miliseconds = elapsedTime % 1000;
-        var formattedTimer = minutes + ":" + seconds + ":" + miliseconds;
-        $(".timer-output").text(formattedTimer);
+        updateTimer(elapsedTime);
     });
+}
+
+function updateTimer(elapsedTime) {
+    var minutes = Math.floor(elapsedTime / 60000);
+    var seconds = Math.floor((elapsedTime % 60000) / 1000);
+    var miliseconds = elapsedTime % 1000;
+    var formattedTimer = minutes + ":" + seconds + ":" + miliseconds;
+    $(".timer-output").text(formattedTimer);
 }
 
 function stopTimer() {
     clearInterval(timerId);
+    timerId = undefined;
 }
 
 function winGame() {
@@ -125,6 +131,7 @@ function testMatch() {
         confirmMatch();
         if (revealedCards.length === 16) {
             winGame();
+            console.log('you won');
         }
     } else {
         disableFlippingCards();
@@ -143,16 +150,23 @@ function disableFlippingCards() {
     disabledCards = true;
 }
 
+function ensureGameStarted() {
+    if (timerId === undefined) {
+        startTimer(); //when first card is clicked
+    }
+}
+
 $(function () {
     $("li.card").on("click", function () {
         if (disabledCards){
             return;
         }
+        ensureGameStarted();
         revealCard($(this));
     });
-    $(".restart").on("click", function() {
-        startGame();
+    $(".restart").on("click", function () {
+        resetGame();
     });
-    startGame();
+    resetGame();
 });
 
