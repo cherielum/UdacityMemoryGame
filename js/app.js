@@ -63,7 +63,7 @@ function resetGame() {
         concealCards();
     }
     updateTimer(0);
-    shuffleCards();
+    //shuffleCards();
 }
 
 function shuffleCards() {
@@ -97,6 +97,12 @@ function stopTimer() {
 
 function winGame() {
     stopTimer();
+    window.setTimeout(function () {
+        var restart = confirm("You win! Do you want to play again.");
+        if (restart) {
+            resetGame();
+        }
+    });
 }
 
 function updateMoves() {
@@ -138,7 +144,6 @@ function testMatch() {
         confirmMatch();
         if (revealedCards.length === 16) {
             winGame();
-            console.log('you won');
         }
     } else {
         disableFlippingCards();

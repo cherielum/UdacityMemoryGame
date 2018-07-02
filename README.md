@@ -1,7 +1,5 @@
 # Memory Game Project
 
-## Table of Contents
-
 ## Instructions
 
 Try and match all the pairs of the same image in as little moves as possible.
