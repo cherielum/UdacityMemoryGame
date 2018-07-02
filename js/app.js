@@ -63,6 +63,13 @@ function resetGame() {
         concealCards();
     }
     updateTimer(0);
+    shuffleCards();
+}
+
+function shuffleCards() {
+    var cards = $(".card");
+    var cards = shuffle(cards);
+    $(".deck").html(cards);
 }
 
 function startTimer() {
@@ -157,7 +164,7 @@ function ensureGameStarted() {
 }
 
 $(function () {
-    $("li.card").on("click", function () {
+    $(".deck").on("click", ".card", function () {
         if (disabledCards){
             return;
         }
