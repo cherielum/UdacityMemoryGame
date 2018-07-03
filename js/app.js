@@ -63,7 +63,7 @@ function resetGame() {
         concealCards();
     }
     updateTimer(0);
-    //shuffleCards();
+    shuffleCards();
 }
 
 function shuffleCards() {
