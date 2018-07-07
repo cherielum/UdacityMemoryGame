@@ -37,6 +37,7 @@ var revealedCards = [];
 var moves = 0;
 var disabledCards = false;
 var timerId;
+var startTime;
 
 function revealCard(card) {
     card.addClass("open show");
@@ -74,20 +75,26 @@ function shuffleCards() {
 
 function startTimer() {
     stopTimer();
-    var startTime = new Date();
+    startTime = new Date();
     timerId = setInterval(function () {
-        var currentTime = new Date();
-        var elapsedTime = currentTime - startTime;
-        updateTimer(elapsedTime);
+        updateTimer(elapsedTime());
     });
 }
 
+function elapsedTime() {
+    var currentTime = new Date();
+    return currentTime - startTime;
+}
+
 function updateTimer(elapsedTime) {
+    $(".timer-output").text(formatElapsedTime(elapsedTime));
+}
+
+function formatElapsedTime(elapsedTime) {
     var minutes = Math.floor(elapsedTime / 60000);
     var seconds = Math.floor((elapsedTime % 60000) / 1000);
     var miliseconds = elapsedTime % 1000;
-    var formattedTimer = minutes + ":" + seconds + ":" + miliseconds;
-    $(".timer-output").text(formattedTimer);
+    return minutes + ":" + seconds + ":" + miliseconds;
 }
 
 function stopTimer() {
@@ -98,7 +105,11 @@ function stopTimer() {
 function winGame() {
     stopTimer();
     window.setTimeout(function () {
-        var restart = confirm("You win! Do you want to play again.");
+        var restart = confirm("\nCongratulations, you win!\nYou have " +
+            stars() +
+            " stars and it took you " +
+            formatElapsedTime(elapsedTime()) +
+            "!\nClick OK to play again!");
         if (restart) {
             resetGame();
         }
@@ -110,18 +121,20 @@ function updateMoves() {
     updateStars();
 }
 
-function updateStars() {
-    var stars;
+function stars() {
     if (moves <= 8) {
-        stars = 3;
+        return 3;
     } else if (moves <= 15) {
-        stars = 2;
+        return 2;
     } else {
-        stars = 1;
+        return 1;
     }
+}
+
+function updateStars() {
     $(".stars").html("");
     for (var i = 0; i < 3; i++) {
-        if (i+1 > stars) {
+        if (i+1 > stars()) {
             $(".stars").append('<li><i class="fa fa-star-o"></i></li>');
         } else {
             $(".stars").append('<li><i class="fa fa-star"></i></li>');
