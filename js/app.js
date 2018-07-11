@@ -183,6 +183,7 @@ function ensureGameStarted() {
 
 $(function () {
     $(".deck").on("click", ".card", function () {
+        console.log('Just clicked a card.');
         if (disabledCards){
             return;
         }
@@ -194,4 +195,3 @@ $(function () {
     });
     resetGame();
 });
-
