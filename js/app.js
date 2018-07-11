@@ -40,6 +40,9 @@ var timerId;
 var startTime;
 
 function revealCard(card) {
+    if (card.hasClass("open") || card.hasClass("match")) {
+        return;
+    }
     card.addClass("open show");
     revealedCards.push(card);
     if (revealedCards.length % 2 == 0) {
@@ -183,8 +186,7 @@ function ensureGameStarted() {
 
 $(function () {
     $(".deck").on("click", ".card", function () {
-        console.log('Just clicked a card.');
-        if (disabledCards){
+        if (disabledCards) {
             return;
         }
         ensureGameStarted();
