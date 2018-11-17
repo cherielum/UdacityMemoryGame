@@ -125,9 +125,9 @@ function updateMoves() {
 }
 
 function stars() {
-    if (moves <= 8) {
+    if (moves <= 12) {
         return 3;
-    } else if (moves <= 15) {
+    } else if (moves <= 16) {
         return 2;
     } else {
         return 1;
