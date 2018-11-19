@@ -15,4 +15,4 @@ Try and match all the pairs of the same image in as little moves as possible.
 jQuery
 
 ## Website 
-https://cherielum.github.io/UdacityMe…
+https://cherielum.github.io/UdacityMemoryGame/
